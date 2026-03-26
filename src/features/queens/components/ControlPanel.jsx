@@ -170,17 +170,21 @@ function ControlPanel({
 
           <div style={{ fontSize: '.58rem', color: 'var(--muted)' }}>Lịch sử:</div>
           <div className="hist-row">
-            {snaps.map((snap, idx) => (
-              <div
-                key={idx}
-                className={`hchip${activeSnap === idx ? ' on' : ''}`}
-                onClick={() => restoreSnap(idx)}
-              >
-                {idx === 0 ? 'Khởi đầu' : `B${snap.step}`}
-                {snap.hv !== undefined && snap.hb !== undefined && snap.hb >= snap.hv && idx > 0
-                  ? `@${snap.step}` : ''}
-              </div>
-            ))}
+            {snaps.map((snap, idx) => {
+              let label;
+              if (idx === 0) label = 'Khởi đầu';
+              else if (snap.type === 'stuck') label = `Kẹt@${snap.step}`;
+              else label = `B${snap.step}`;
+              return (
+                <div
+                  key={idx}
+                  className={`hchip${activeSnap === idx ? ' on' : ''}`}
+                  onClick={() => restoreSnap(idx)}
+                >
+                  {label}
+                </div>
+              );
+            })}
           </div>
 
           {/* Stop box */}

@@ -131,7 +131,7 @@ export function useHillClimbing() {
     setPhase('ready');
     phaseRef.current = 'ready';
 
-    const initSnap = { q: [...newQ], T, best: new Set(), hv, hb: bestH, nb: moves.length, step: 0 };
+    const initSnap = { type: 'init', q: [...newQ], T, best: new Set(), hv, hb: bestH, nb: moves.length, step: 0 };
     setSnaps([initSnap]);
     setActiveSnap(0);
 
@@ -263,7 +263,7 @@ export function useHillClimbing() {
       phaseRef.current = 'stuck';
       setStopBox({ type: 'local', hv, bestH });
       setSnaps(prev => {
-        const snap = { q: [...q], T, best: bs, hv, hb: bestH, nb: moves.length, step: newStep };
+        const snap = { type: 'stuck', q: [...q], T, best: bs, hv, hb: bestH, nb: moves.length, step: newStep };
         const next = [...prev, snap];
         setActiveSnap(next.length - 1);
         return next;
@@ -306,7 +306,7 @@ export function useHillClimbing() {
     updateMetrics(hv2, bh2, mv2.length);
 
     setSnaps(prev => {
-      const snap = { q: [...newQ], T: T2, best: new Set(), hv: hv2, hb: bh2, nb: mv2.length, step: newStep };
+      const snap = { type: 'step', q: [...newQ], T: T2, best: new Set(), hv: hv2, hb: bh2, nb: mv2.length, step: newStep };
       const next = [...prev, snap];
       setActiveSnap(next.length - 1);
       return next;

@@ -17,20 +17,19 @@ export default function Home() {
     clearLog,
   } = useHillClimbing();
 
-  // onSI wrapper: read input value and pass to hook
   const handleSIChange = useCallback((col, val) => {
     onSI(col, val);
   }, [onSI]);
 
   return (
     <Container>
-      {/* Flying queen overlay (fixed, used for arc animation) */}
+      {/* Flying queen overlay */}
       <div id="fq" ref={flyingQueenRef}>♛</div>
 
       <Navbar />
 
       <div className="main">
-        {/* ── LEFT COLUMN ── */}
+        {/* ── LEFT COLUMN: controls only ── */}
         <div className="col-l">
           <ControlPanel
             setupQ={setupQ}
@@ -52,8 +51,10 @@ export default function Home() {
             restoreSnap={restoreSnap}
             onSIChange={handleSIChange}
           />
+        </div>
 
-          {/* Board panel */}
+        {/* ── CENTER COLUMN: board ── */}
+        <div className="col-c">
           <div className="panel">
             <div className="ph">
               <span className="ph-ico">♟</span>
@@ -73,7 +74,7 @@ export default function Home() {
           </div>
         </div>
 
-        {/* ── RIGHT COLUMN ── */}
+        {/* ── RIGHT COLUMN: stats ── */}
         <div className="col-r">
           <StatsPanel
             queens={queens}

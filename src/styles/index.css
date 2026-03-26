@@ -71,9 +71,10 @@ body::before {
 .hdr-sub { font-size: .6rem; color: var(--muted); letter-spacing: 3px; margin-top: 3px; text-transform: uppercase; }
 
 /* ── LAYOUT ── */
-.main { display: flex; gap: 14px; align-items: flex-start; flex-wrap: wrap; justify-content: center; width: 100%; max-width: 1380px; }
-.col-l { display: flex; flex-direction: column; gap: 12px; flex-shrink: 0; }
-.col-r { display: flex; flex-direction: column; gap: 12px; min-width: 0; flex: 1; max-width: 560px; }
+.main { display: flex; gap: 14px; align-items: flex-start; flex-wrap: wrap; justify-content: center; width: 100%; max-width: 1400px; }
+.col-l { display: flex; flex-direction: column; gap: 12px; flex-shrink: 0; width: 270px; }
+.col-c { display: flex; flex-direction: column; gap: 12px; flex-shrink: 0; }
+.col-r { display: flex; flex-direction: column; gap: 12px; flex-shrink: 0; width: 390px; }
 
 /* ── PANEL ── */
 .panel { background: var(--sf); border: 1px solid var(--bd); border-radius: 10px; overflow: hidden; animation: fadeUp .35s ease both; }
@@ -262,7 +263,7 @@ input[type=range] { accent-color: var(--gold); cursor: pointer; height: 3px; }
 .qb { padding: 2px 7px; border: 1px solid var(--bd2); border-radius: 4px; font-size: .6rem; color: var(--text); }
 .speed-row { display: flex; align-items: center; gap: 8px; font-size: .64rem; color: var(--muted); }
 
-@media (max-width: 880px) {
+@media (max-width: 1000px) {
   .main { flex-direction: column; align-items: center; }
-  .col-r { max-width: 100%; width: 100%; }
+  .col-l, .col-c, .col-r { max-width: 100%; width: 100%; }
 }
