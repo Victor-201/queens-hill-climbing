@@ -88,11 +88,8 @@ function ControlPanel({
               <button
                 className={`tab${mode === 'click' ? ' on' : ''}`}
                 onClick={() => switchMode('click')}
-              >← Click bàn cờ</button>
+              >🖱 Click bàn cờ</button>
             </div>
-          </div>
-          {/* Row 2: Action buttons */}
-          <div className="row mt6">
             <button className="btn warn" onClick={doRandom}>🎲 Ngẫu nhiên</button>
             <button className="btn primary" onClick={handleConfirm}>✓ Xác nhận</button>
           </div>
