@@ -36,8 +36,8 @@ const StatsPanel = React.memo(function StatsPanel({
           <span className="ph-ico">📊</span>
           <span className="ph-ttl">CHỈ SỐ</span>
         </div>
-        <div className="pb">
-          <div className="metrics">
+      <div className="pb">
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '7px' }}>
             <div className="metric">
               <div className="ml">Bước</div>
               <div className="mv" id="m-step">{stepNum}</div>
@@ -47,10 +47,12 @@ const StatsPanel = React.memo(function StatsPanel({
               <div className={hvCls} id="m-h">{hv !== null && hv !== undefined ? hv : '—'}</div>
             </div>
             <div className="metric">
-              <div className="ml">h tốt nhất LG</div>
+              <div className="ml">H tốt nhất LG</div>
               <div className="mv" id="m-hb">{hb !== null && hb !== undefined ? hb : '—'}</div>
             </div>
-            <div className="metric">
+          </div>
+          <div style={{ marginTop: '7px' }}>
+            <div className="metric" style={{ display: 'inline-flex', minWidth: '120px' }}>
               <div className="ml">Số LG tốt nhất</div>
               <div className="mv" id="m-nb">{nb !== null && nb !== undefined ? nb : '—'}</div>
             </div>

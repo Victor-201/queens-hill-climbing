@@ -78,17 +78,21 @@ function ControlPanel({
           </span>
         </div>
         <div className="pb">
+          {/* Row 1: Mode tabs */}
           <div className="row mt6">
             <div className="tabs">
               <button
                 className={`tab${mode === 'manual' ? ' on' : ''}`}
                 onClick={() => switchMode('manual')}
-              >✏ Nhập tay</button>
+              >← Nhập tay</button>
               <button
                 className={`tab${mode === 'click' ? ' on' : ''}`}
                 onClick={() => switchMode('click')}
-              >🖱 Click bàn cờ</button>
+              >← Click bàn cờ</button>
             </div>
+          </div>
+          {/* Row 2: Action buttons */}
+          <div className="row mt6">
             <button className="btn warn" onClick={doRandom}>🎲 Ngẫu nhiên</button>
             <button className="btn primary" onClick={handleConfirm}>✓ Xác nhận</button>
           </div>
