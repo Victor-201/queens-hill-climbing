@@ -5,6 +5,7 @@ import Container from '../components/layout/Container.jsx';
 import ChessBoard from '../features/queens/components/ChessBoard.jsx';
 import ControlPanel from '../features/queens/components/ControlPanel.jsx';
 import StatsPanel from '../features/queens/components/StatsPanel.jsx';
+import { Grid3X3 } from 'lucide-react';
 
 export default function Home() {
   const {
@@ -24,7 +25,7 @@ export default function Home() {
   return (
     <Container>
       {/* Flying queen overlay */}
-      <div id="fq" ref={flyingQueenRef}>♛</div>
+      <div id="fq" ref={flyingQueenRef}></div>
 
       <Navbar />
 
@@ -57,7 +58,7 @@ export default function Home() {
         <div className="col-c">
           <div className="panel">
             <div className="ph">
-              <span className="ph-ico">♟</span>
+              <Grid3X3 size={15} className="ph-ico" />
               <span className="ph-ttl">BÀN CỜ</span>
             </div>
             <div className="pb">

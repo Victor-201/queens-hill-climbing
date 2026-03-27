@@ -1,5 +1,5 @@
-import React from 'react';
-import { queenSVG } from '../utils/boardUtils.js';
+import React from "react";
+import { queenSVG } from "../utils/boardUtils.js";
 
 /**
  * Queen SVG piece rendered as an img element with an inline SVG data URL.
@@ -7,7 +7,7 @@ import { queenSVG } from '../utils/boardUtils.js';
  */
 const Queen = React.memo(function Queen({ col, row }) {
   const svgStr = queenSVG(col, row);
-  const src = 'data:image/svg+xml,' + encodeURIComponent(svgStr);
+  const src = "data:image/svg+xml," + encodeURIComponent(svgStr);
   return (
     <div className="qpiece">
       <img

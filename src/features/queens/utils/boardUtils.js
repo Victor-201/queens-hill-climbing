@@ -56,11 +56,14 @@ export const sleep = ms => new Promise(r => setTimeout(r, ms));
  * boardEl = reference to the board grid DOM element.
  */
 export function cellCenter(boardEl, col, row) {
-  const SZ   = 54;
   const rect = boardEl.getBoundingClientRect();
+  const cellW = rect.width / 8;
+  const cellH = rect.height / 8;
   return {
-    x: rect.left + col * SZ + SZ / 2,
-    y: rect.top  + (7 - row) * SZ + SZ / 2,
+    x: rect.left + col * cellW + cellW / 2,
+    y: rect.top  + (7 - row) * cellH + cellH / 2,
+    w: cellW,
+    h: cellH,
   };
 }
 
@@ -79,8 +82,8 @@ export function flyArc(el, A, B, dur) {
     (function frame(now) {
       const raw = Math.min((now - t0) / dur, 1);
       const e   = ease(raw);
-      el.style.left      = (A.x + dx * e - 17) + 'px';
-      el.style.top       = (A.y + dy * e - Math.sin(raw * Math.PI) * arc - 17) + 'px';
+      el.style.left      = (A.x + dx * e - A.w / 2) + 'px';
+      el.style.top       = (A.y + dy * e - Math.sin(raw * Math.PI) * arc - A.h / 2) + 'px';
       el.style.transform = `scale(${1 + Math.sin(raw * Math.PI) * 0.3})`;
       raw < 1 ? requestAnimationFrame(frame) : resolve();
     })(t0);

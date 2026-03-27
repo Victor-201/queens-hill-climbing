@@ -169,8 +169,13 @@ export function useHillClimbing() {
     const from = cellCenter(boardEl, col, fromRow);
     const to   = cellCenter(boardEl, col, toRow);
 
-    // Show flying queen
-    fqEl.style.cssText = `display:block;left:${from.x - 17}px;top:${from.y - 17}px;opacity:1;transform:scale(1)`;
+    // Inject SVG mimicking exactly the queen's appearance
+    const svgStr = queenSVG(col, fromRow);
+    const src = 'data:image/svg+xml,' + encodeURIComponent(svgStr);
+    fqEl.innerHTML = `<div style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;"><img src="${src}" style="width: 75%; height: 75%; display: block;" /></div>`;
+
+    // Show flying queen sized precisely to the dynamic cell bounds
+    fqEl.style.cssText = `display:block;left:${from.x - from.w / 2}px;top:${from.y - from.h / 2}px;width:${from.w}px;height:${from.h}px;opacity:1;transform:scale(1)`;
     if (qimgEl) qimgEl.style.opacity = '0';
 
     // Trail on departure cell
