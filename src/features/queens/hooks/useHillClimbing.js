@@ -31,15 +31,16 @@ export function useHillClimbing() {
   const [isAuto, setIsAuto]     = useState(false);
 
   // ── Refs ──
-  const busyRef      = useRef(false);
-  const autoTmrRef   = useRef(null);
-  const boardRef     = useRef(null);
+  const busyRef        = useRef(false);
+  const autoTmrRef     = useRef(null);
+  const boardRef       = useRef(null);
   const flyingQueenRef = useRef(null);
-  const queensRef    = useRef([...DEFAULT]);
-  const phaseRef     = useRef('setup');
-  const speedRef     = useRef(1200);
-  const stepNumRef   = useRef(0);
-  const logIdRef     = useRef(0);
+  const queensRef      = useRef([...DEFAULT]);
+  const phaseRef       = useRef('setup');
+  const speedRef       = useRef(1200);
+  const stepNumRef     = useRef(0);
+  const logIdRef       = useRef(0);
+  const confirmedQRef  = useRef([...DEFAULT]); // last position user confirmed
 
   // Keep refs in sync
   useEffect(() => { queensRef.current = queens; }, [queens]);
@@ -154,6 +155,7 @@ export function useHillClimbing() {
     setQueens(newQ);
     queensRef.current = newQ;
     setSetupQ(newQ);
+    confirmedQRef.current = [...newQ]; // remember for reset
     setStepNum(0);
     stepNumRef.current = 0;
     setSnaps([]);
@@ -406,7 +408,7 @@ export function useHillClimbing() {
     stepNumRef.current = s.step;
   }, [snaps, updateMetrics]);
 
-  // ── FULL RESET ──
+  // ── FULL RESET — back to last confirmed setup ──
   const fullReset = useCallback(() => {
     if (autoTmrRef.current) { clearInterval(autoTmrRef.current); autoTmrRef.current = null; }
     busyRef.current = false;
@@ -425,11 +427,11 @@ export function useHillClimbing() {
     setMetrics({ hv: null, hb: null, nb: null });
     setStopBox(null);
     setInputErrs(false);
-    const n = boardSizeRef.current;
-    const def = defaultPosition(n);
-    setSetupQ(def);
-    setQueens(def);
-    queensRef.current = def;
+    // Restore the position the user last confirmed (not the factory default)
+    const restored = [...confirmedQRef.current];
+    setSetupQ(restored);
+    setQueens(restored);
+    queensRef.current = restored;
   }, []);
 
   return {
