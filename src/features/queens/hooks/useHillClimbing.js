@@ -28,6 +28,7 @@ export function useHillClimbing() {
   const [activeSnap, setActiveSnap] = useState(null);
   const [stopBox, setStopBox]   = useState(null);
   const [inputErrs, setInputErrs] = useState(false);
+  const [isAuto, setIsAuto]     = useState(false);
 
   // ── Refs ──
   const busyRef      = useRef(false);
@@ -61,7 +62,6 @@ export function useHillClimbing() {
 
   // ── BOARD SIZE CHANGE ──
   const changeBoardSize = useCallback((n) => {
-    // Stop auto-run
     if (autoTmrRef.current) { clearInterval(autoTmrRef.current); autoTmrRef.current = null; }
     busyRef.current = false;
 
@@ -73,7 +73,6 @@ export function useHillClimbing() {
     setQueens(def);
     queensRef.current = def;
 
-    // Reset everything
     setPhase('setup');
     phaseRef.current = 'setup';
     setStepNum(0);
@@ -362,8 +361,6 @@ export function useHillClimbing() {
   }, [addLog, updateMetrics, animateMove]);
 
   // ── AUTO RUN ──
-  const [isAuto, setIsAuto] = useState(false);
-
   const toggleAuto = useCallback(() => {
     if (autoTmrRef.current) {
       clearInterval(autoTmrRef.current);

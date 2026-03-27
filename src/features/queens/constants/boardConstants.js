@@ -19,8 +19,12 @@ export const COLS = ALL_COLS;
 // Corresponds to: a7, b6, c4, d8, e2, f3, g5, h1
 export const DEFAULT = [6, 5, 3, 7, 1, 2, 4, 0];
 
-// Generate the default (diagonal) position for any board size.
-// Queen at column i is placed at row i → main diagonal.
+// Generate the default position for any board size.
+// For 8×8: use the original DEFAULT exactly.
+// For smaller boards: slice the first n columns of DEFAULT and wrap row
+// values into range [0..n-1] using modulo — preserves the varied pattern,
+// avoids a diagonal, and never leaves any queen out of bounds.
 export function defaultPosition(n = N) {
-  return Array.from({ length: n }, (_, i) => i);
+  if (n === 8) return [...DEFAULT];
+  return DEFAULT.slice(0, n).map(row => row % n);
 }

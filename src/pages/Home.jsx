@@ -30,7 +30,7 @@ export default function Home() {
       <Navbar />
 
       <div className="main">
-        {/* ── LEFT COLUMN: controls only ── */}
+        {/* ── LEFT COLUMN ── */}
         <div className="col-l">
           <ControlPanel
             boardSize={boardSize}
