@@ -204,11 +204,11 @@ body::before {
 /* ── HEURISTIC TABLE ── */
 .htbl { display: grid; width: 100%; margin: 0 auto; border-top: 1px solid var(--bd); border-left: 1px solid var(--bd); }
 .htbl thead, .htbl tbody, .htbl tr { display: contents; }
-.htbl td, .htbl th { display: flex; align-items: center; justify-content: center; border-right: 1px solid var(--bd); border-bottom: 1px solid var(--bd); font-weight: 600; font-size: .75rem; transition: background .35s, color .35s; }
+.htbl td, .htbl th { display: flex; align-items: center; justify-content: center; border-right: 1px solid var(--bd); border-bottom: 1px solid var(--bd); font-weight: 600; font-size: .75rem; transition: background .35s, color .35s; overflow: hidden; box-sizing: border-box; }
 .htbl th { font-size: .6rem; color: var(--gold); font-weight: 700; letter-spacing: .5px; background: var(--sf); }
 .htbl .rl { font-size: .6rem; color: var(--gold); font-weight: 700; background: var(--sf); min-width: 18px; }
 .htbl .cur  { background: #261e08!important; color: var(--gold2)!important; box-shadow: inset 0 0 0 1px var(--gold); font-size: 1.4rem; z-index: 1; }
-.htbl .best { background: #07260f!important; color: var(--green)!important; border: 2px solid var(--green)!important; font-weight: 700; font-size: .72rem; box-shadow: inset 0 0 8px rgba(46,204,113,.2); }
+.htbl .best { background: #07260f!important; color: var(--green)!important; box-shadow: inset 0 0 0 2px var(--green), inset 0 0 8px rgba(46,204,113,.2); font-weight: 700; font-size: .72rem; }
 .h0  { background: #07180e; color: #45e87a; } .h1  { background: #0a1e10; color: #58d870; }
 .h2  { background: #142010; color: #85c858; } .h3  { background: #1c2210; color: #b2be45; }
 .h4  { background: #221f0e; color: #d2ae35; } .h5  { background: #221708; color: #cc8525; }

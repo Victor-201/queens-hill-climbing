@@ -109,7 +109,11 @@ const StatsPanel = React.memo(function StatsPanel({
               <table
                 className="htbl"
                 id="htbl"
-                style={{ gridTemplateColumns: `repeat(${boardSize}, 1fr)`, aspectRatio: '1 / 1' }}
+                style={{
+                  gridTemplateColumns: `repeat(${boardSize}, 1fr)`,
+                  gridTemplateRows: `repeat(${boardSize}, 1fr)`,
+                  aspectRatio: '1 / 1',
+                }}
               >
                 <tbody>
                   {Array.from({ length: boardSize }, (_, i) => boardSize - 1 - i).map((row) => (
