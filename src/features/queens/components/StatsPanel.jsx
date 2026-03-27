@@ -120,7 +120,11 @@ const StatsPanel = React.memo(function StatsPanel({
         <div className="pb">
           <div style={{ overflowX: "auto" }}>
             {hTable.length > 0 ? (
-              <table className="htbl" id="htbl">
+              <table
+                className="htbl"
+                id="htbl"
+                style={{ gridTemplateColumns: `18px repeat(${boardSize}, 1fr)` }}
+              >
                 <thead>
                   <tr>
                     <th className="rl"></th>

@@ -201,8 +201,8 @@ const ChessBoard = React.memo(function ChessBoard({
           style={{
             userSelect: "none",
             touchAction: "none",
-            gridTemplateColumns: `repeat(${boardSize}, var(--SZ))`,
-            gridTemplateRows: `repeat(${boardSize}, var(--SZ))`,
+            gridTemplateColumns: `repeat(${boardSize}, 1fr)`,
+            gridTemplateRows: `repeat(${boardSize}, 1fr)`,
           }}
         >
           {cells}

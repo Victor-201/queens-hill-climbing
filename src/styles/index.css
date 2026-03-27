@@ -202,10 +202,11 @@ body::before {
 }
 
 /* ── HEURISTIC TABLE ── */
-.htbl { display: grid; grid-template-columns: repeat(8, 1fr); grid-template-rows: repeat(8, 1fr); width: 82%; aspect-ratio: 1 / 1; margin: 0 auto; border-top: 1px solid var(--bd); border-left: 1px solid var(--bd); }
-.htbl tbody, .htbl tr { display: contents; }
-.htbl td { display: flex; align-items: center; justify-content: center; border-right: 1px solid var(--bd); border-bottom: 1px solid var(--bd); font-weight: 600; font-size: .75rem; transition: background .35s, color .35s; }
-.htbl th, .htbl .rl { display: none; }
+.htbl { display: grid; width: 100%; margin: 0 auto; border-top: 1px solid var(--bd); border-left: 1px solid var(--bd); }
+.htbl thead, .htbl tbody, .htbl tr { display: contents; }
+.htbl td, .htbl th { display: flex; align-items: center; justify-content: center; border-right: 1px solid var(--bd); border-bottom: 1px solid var(--bd); font-weight: 600; font-size: .75rem; transition: background .35s, color .35s; }
+.htbl th { font-size: .6rem; color: var(--gold); font-weight: 700; letter-spacing: .5px; background: var(--sf); }
+.htbl .rl { font-size: .6rem; color: var(--gold); font-weight: 700; background: var(--sf); min-width: 18px; }
 .htbl .cur  { background: #261e08!important; color: var(--gold2)!important; box-shadow: inset 0 0 0 1px var(--gold); font-size: 1.4rem; z-index: 1; }
 .htbl .best { background: #07260f!important; color: var(--green)!important; border: 2px solid var(--green)!important; font-weight: 700; font-size: .72rem; box-shadow: inset 0 0 8px rgba(46,204,113,.2); }
 .h0  { background: #07180e; color: #45e87a; } .h1  { background: #0a1e10; color: #58d870; }
