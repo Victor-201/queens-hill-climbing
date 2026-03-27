@@ -109,18 +109,11 @@ const StatsPanel = React.memo(function StatsPanel({
               <table
                 className="htbl"
                 id="htbl"
-                style={{ gridTemplateColumns: `18px repeat(${boardSize}, 1fr)` }}
+                style={{ gridTemplateColumns: `repeat(${boardSize}, 1fr)`, aspectRatio: '1 / 1' }}
               >
-                <thead>
-                  <tr>
-                    <th className="rl"></th>
-                    {COLS.map((c) => <th key={c}>{c}</th>)}
-                  </tr>
-                </thead>
                 <tbody>
                   {Array.from({ length: boardSize }, (_, i) => boardSize - 1 - i).map((row) => (
                     <tr key={row}>
-                      <td className="rl">{row + 1}</td>
                       {Array.from({ length: boardSize }, (_, col) => {
                         const v = hTable[row]?.[col];
                         const isCur = queens[col] === row;
