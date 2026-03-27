@@ -93,6 +93,8 @@ export function useHillClimbing(t = (k) => k) {
 
   // ── SETUP: column input ──
   const onSI = useCallback((col, val) => {
+    if (autoTmrRef.current) { clearInterval(autoTmrRef.current); autoTmrRef.current = null; }
+    setIsAuto(false);
     const n = boardSizeRef.current;
     const v = parseInt(val);
     const newQ = [...setupQ];
@@ -107,10 +109,16 @@ export function useHillClimbing(t = (k) => k) {
   }, [setupQ]);
 
   // ── SETUP: switch mode ──
-  const switchMode = useCallback((m) => { setMode(m); }, []);
+  const switchMode = useCallback((m) => {
+    if (autoTmrRef.current) { clearInterval(autoTmrRef.current); autoTmrRef.current = null; }
+    setIsAuto(false);
+    setMode(m);
+  }, []);
 
   // ── SETUP: cell click ──
   const onCellClick = useCallback((col, row) => {
+    if (autoTmrRef.current) { clearInterval(autoTmrRef.current); autoTmrRef.current = null; }
+    setIsAuto(false);
     if (phaseRef.current !== 'setup' && phaseRef.current !== 'ready') return;
     setSetupQ(prev => {
       const nq = [...prev]; nq[col] = row;
@@ -124,6 +132,8 @@ export function useHillClimbing(t = (k) => k) {
 
   // ── SETUP: random ──
   const doRandom = useCallback(() => {
+    if (autoTmrRef.current) { clearInterval(autoTmrRef.current); autoTmrRef.current = null; }
+    setIsAuto(false);
     const n = boardSizeRef.current;
     const rq = Array.from({ length: n }, () => Math.floor(Math.random() * n));
     setSetupQ(rq);
@@ -135,6 +145,8 @@ export function useHillClimbing(t = (k) => k) {
 
   // ── SETUP: confirm ──
   const confirmSetup = useCallback((inputVals) => {
+    if (autoTmrRef.current) { clearInterval(autoTmrRef.current); autoTmrRef.current = null; }
+    setIsAuto(false);
     const n = boardSizeRef.current;
     const cols = colLabels(n);
     let ok = true;
