@@ -2,11 +2,8 @@ import React, { useEffect, useRef } from "react";
 import { colLabels } from "../constants/boardConstants.js";
 import { hcls } from "../utils/boardUtils.js";
 import { BarChart2, Map, ClipboardList } from "lucide-react";
+import { useLang } from "../../../context/LanguageContext.jsx";
 
-/**
- * Stats Panel — right column.
- * Contains: metrics cards, heuristic table, algorithm log.
- */
 const StatsPanel = React.memo(function StatsPanel({
   queens,
   metrics,
@@ -17,6 +14,7 @@ const StatsPanel = React.memo(function StatsPanel({
   clearLog,
   boardSize = 8,
 }) {
+  const { t } = useLang();
   const logRef = useRef(null);
   const COLS = colLabels(boardSize);
   const neighborCount = boardSize * (boardSize - 1);
@@ -58,28 +56,28 @@ const StatsPanel = React.memo(function StatsPanel({
       <div className="panel">
         <div className="ph">
           <BarChart2 size={15} className="ph-ico" />
-          <span className="ph-ttl">CHỈ SỐ</span>
+          <span className="ph-ttl">{t('metrics.step').toUpperCase()}S / h(n)</span>
         </div>
         <div className="pb">
           <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: "7px" }}>
             <div className="metric">
-              <div className="ml">Bước</div>
+              <div className="ml">{t('metrics.step')}</div>
               <div className="mv" id="m-step">{stepNum}</div>
             </div>
             <div className="metric">
-              <div className="ml">h(n) hiện tại</div>
+              <div className="ml">{t('metrics.currentH')}</div>
               <div className={hvCls} id="m-h">
                 {hv !== null && hv !== undefined ? hv : "—"}
               </div>
             </div>
             <div className="metric">
-              <div className="ml">H tốt nhất</div>
+              <div className="ml">{t('metrics.bestH')}</div>
               <div className="mv" id="m-hb">
                 {hb !== null && hb !== undefined ? hb : "—"}
               </div>
             </div>
             <div className="metric">
-              <div className="ml">Số nước đi tốt nhất</div>
+              <div className="ml">{t('metrics.bestMoves')}</div>
               <div className="mv" id="m-nb">
                 {nb !== null && nb !== undefined ? nb : "—"}
               </div>
@@ -92,14 +90,16 @@ const StatsPanel = React.memo(function StatsPanel({
       <div className="panel">
         <div className="ph">
           <Map size={15} className="ph-ico" />
-          <span className="ph-ttl">BẢNG HEURISTIC h(n) — {neighborCount} LÁNG GIỀNG</span>
+          <span className="ph-ttl">
+            {t('heuristicTable')} — {neighborCount} {t('neighbors')}
+          </span>
           {hTable.length > 0 && (
             <button
               className={`btn${copied ? " success" : ""}`}
               style={{ marginLeft: "auto", padding: "2px 9px", fontSize: ".58rem" }}
               onClick={handleCopyTable}
             >
-              {copied ? "✓ Đã copy" : "Copy"}
+              {copied ? t('buttons.copied') : t('buttons.copy')}
             </button>
           )}
         </div>
@@ -112,17 +112,24 @@ const StatsPanel = React.memo(function StatsPanel({
                 style={{
                   gridTemplateColumns: `repeat(${boardSize}, 1fr)`,
                   gridTemplateRows: `repeat(${boardSize}, 1fr)`,
-                  aspectRatio: '1 / 1',
+                  aspectRatio: "1 / 1",
                 }}
               >
                 <tbody>
-                  {Array.from({ length: boardSize }, (_, i) => boardSize - 1 - i).map((row) => (
+                  {Array.from(
+                    { length: boardSize },
+                    (_, i) => boardSize - 1 - i,
+                  ).map((row) => (
                     <tr key={row}>
                       {Array.from({ length: boardSize }, (_, col) => {
                         const v = hTable[row]?.[col];
                         const isCur = queens[col] === row;
                         const isBest = bestSet.has(`${col},${row}`);
-                        const cls = isCur ? "cur" : isBest ? "best" : hcls(v ?? 0);
+                        const cls = isCur
+                          ? "cur"
+                          : isBest
+                            ? "best"
+                            : hcls(v ?? 0);
                         return (
                           <td key={col} className={cls}>
                             {isCur ? "♛" : v !== undefined ? v : ""}
@@ -135,19 +142,19 @@ const StatsPanel = React.memo(function StatsPanel({
               </table>
             ) : (
               <div style={{ fontSize: ".64rem", color: "var(--muted)", padding: "8px 0" }}>
-                Xác nhận vị trí khởi đầu để xem bảng heuristic.
+                {t('tableHint')}
               </div>
             )}
           </div>
           <div style={{ marginTop: "8px", display: "flex", justifyContent: "space-evenly", flexWrap: "wrap", fontSize: ".58rem" }}>
-            <span style={{ color: "var(--gold)" }}>❑ Vị trí hiện tại</span>
-            <span style={{ color: "var(--green)" }}>❑ Nước tốt nhất</span>
-            <span style={{ color: "#45e87a" }}>❑ h=0</span>
-            <span style={{ color: "#85c858" }}>❑ h thấp</span>
-            <span style={{ color: "#c03030" }}>❑ h cao</span>
+            <span style={{ color: "var(--gold)" }}>❑ {t('legend.current')}</span>
+            <span style={{ color: "var(--green)" }}>❑ {t('legend.best')}</span>
+            <span style={{ color: "#45e87a" }}>❑ {t('legend.h0')}</span>
+            <span style={{ color: "#85c858" }}>❑ {t('legend.low')}</span>
+            <span style={{ color: "#c03030" }}>❑ {t('legend.high')}</span>
           </div>
           <div style={{ textAlign: "center", marginTop: "3px", fontSize: ".58rem", color: "var(--muted)" }}>
-            Giá trị tại ô (col c, row r) = h(n) nếu dời hậu cột <i>c</i> lên hàng <i>r</i>
+            {t('tableCaption')}
           </div>
         </div>
       </div>
@@ -156,13 +163,13 @@ const StatsPanel = React.memo(function StatsPanel({
       <div className="panel">
         <div className="ph">
           <ClipboardList size={15} className="ph-ico" />
-          <span className="ph-ttl">NHẬT KÝ THUẬT TOÁN</span>
+          <span className="ph-ttl">{t('algorithmLog')}</span>
           <button
             className="btn"
             style={{ marginLeft: "auto", padding: "2px 9px", fontSize: ".58rem" }}
             onClick={clearLog}
           >
-            Xóa
+            {t('buttons.clear')}
           </button>
         </div>
         <div className="pb">

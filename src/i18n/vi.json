@@ -1,0 +1,91 @@
+{
+  "title": "8-QUEENS HILL CLIMBING",
+  "subtitle": "Steepest-Ascent · h(n) = số cặp hậu tấn công nhau (hàng + đường chéo)",
+  "boardPanel": "BÀN CỜ",
+  "boardSize": "KÍCH THƯỚC BÀN CỜ",
+  "initialPosition": "VỊ TRÍ KHỞI TẠO",
+  "controls": "ĐIỀU KHIỂN",
+  "heuristicTable": "BẢNG HEURISTIC h(n)",
+  "neighbors": "Ô CỜ",
+  "algorithmLog": "NHẬT KÝ THUẬT TOÁN",
+  "metrics": {
+    "step": "Bước",
+    "currentH": "h(n) hiện tại",
+    "bestH": "H tốt nhất",
+    "bestMoves": "Số nước đi tốt nhất"
+  },
+  "status": {
+    "waiting": "Chờ xác nhận",
+    "ready": "Sẵn sàng",
+    "running": "Đang chạy",
+    "solved": "Giải xong",
+    "localOptimum": "Local Optimum"
+  },
+  "modes": {
+    "manual": "Nhập tay",
+    "dragdrop": "Kéo thả"
+  },
+  "buttons": {
+    "random": "Ngẫu nhiên",
+    "confirm": "Xác nhận",
+    "nextStep": "Bước tiếp",
+    "auto": "Tự động",
+    "stop": "Dừng",
+    "reset": "Reset",
+    "copy": "Copy",
+    "copied": "✓ Đã copy",
+    "clear": "Xóa"
+  },
+  "speed": "Tốc độ",
+  "history": "Lịch sử",
+  "manualHint": "Nhập hàng (1–{n}) cho mỗi cột — bàn cờ cập nhật realtime:",
+  "manualNote": "Mỗi cột chứa đúng 1 quân hậu — chỉ cần chỉ định hàng",
+  "dragHint": "Kéo thả quân hậu trên bàn cờ để đặt hậu. Mỗi cột chỉ 1 quân.",
+  "inputError": "Cần điền đủ hàng (1–{n}) cho tất cả các cột!",
+  "tableHint": "Xác nhận vị trí khởi đầu để xem bảng heuristic.",
+  "tableCaption": "Giá trị tại ô (col c, row r) = h(n) nếu dời hậu cột c lên hàng r",
+  "legend": {
+    "current": "Vị trí hiện tại",
+    "best": "Nước tốt nhất",
+    "h0": "h=0",
+    "low": "h thấp",
+    "high": "h cao"
+  },
+  "snapLabels": {
+    "start": "Khởi đầu",
+    "stuck": "Kẹt@{step}",
+    "step": "B{step}"
+  },
+  "stopBox": {
+    "solved": "Giải xong! h(n) = 0",
+    "solvedDetail": "Không còn cặp hậu nào tấn công nhau.",
+    "localOptimum": "Local Optimum!",
+    "localDetail": "h(n) hiện tại = {hv} | h tốt nhất LG = {bestH}",
+    "localConclusion": "Không có láng giềng nào có h nhỏ hơn → Dừng."
+  },
+  "log": {
+    "initialState": "── Trạng thái ban đầu ─────────────────────",
+    "position": "Vị trí",
+    "attackingPairs": "cặp hậu tấn công nhau",
+    "bestNeighbor": "Láng giềng tốt nhất",
+    "hValue": "h",
+    "ties": "nước tie",
+    "alreadySolved": "✓ Đây đã là lời giải ngay từ đầu!",
+    "stepHeader": "── Bước {step} ──────────────────────────────",
+    "currentH": "h(n) hiện tại",
+    "scanned": "Duyệt {n} láng giềng → h tốt nhất",
+    "condition": "Điều kiện",
+    "moveTo": "Di chuyển đến best neighbor",
+    "col": "Cột",
+    "row": "hàng",
+    "deltaH": "Δh",
+    "cannotImprove": "── Bước {step}: Không thể cải thiện ────────",
+    "bestNeighborH": "h tốt nhất láng giềng",
+    "plateau": "Tất cả láng giềng có h = h hiện tại (plateau)",
+    "worse": "Tất cả láng giềng có h > h hiện tại",
+    "localOptimumReached": "→ Rơi vào local optimum · Dừng thuật toán",
+    "solvedHeader": "✓ GIẢI XONG SAU {step} BƯỚC ──────────",
+    "solvedH": "h(n) = 0 · Không còn cặp hậu tấn công nhau!",
+    "finalPosition": "Vị trí cuối"
+  }
+}

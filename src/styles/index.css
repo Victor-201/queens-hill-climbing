@@ -149,7 +149,9 @@ body::before {
 .cell { width: 100%; height: 100%; aspect-ratio: 1 / 1; position: relative; display: flex; align-items: center; justify-content: center; cursor: default; overflow: hidden; transition: filter .12s; }
 .cell.light { background: var(--sq-l); }
 .cell.dark  { background: var(--sq-d); }
-.cell.clickable { cursor: default; }
+.cell.clickable { cursor: pointer; }
+.cell.clickable:hover { filter: brightness(1.32); }
+.cell.clickable:hover::after { content: ''; position: absolute; font-size: 1.45rem; color: rgba(0,0,0,.22); pointer-events: none; z-index: 1; }
 
 /* attack hatching */
 .cell.atk::before {
@@ -202,7 +204,7 @@ body::before {
 }
 
 /* ── HEURISTIC TABLE ── */
-.htbl { display: grid; width: 100%; margin: 0 auto; border-top: 1px solid var(--bd); border-left: 1px solid var(--bd); }
+.htbl { display: grid; width: 82%; margin: 0 auto; border-top: 1px solid var(--bd); border-left: 1px solid var(--bd); }
 .htbl thead, .htbl tbody, .htbl tr { display: contents; }
 .htbl td, .htbl th { display: flex; align-items: center; justify-content: center; border-right: 1px solid var(--bd); border-bottom: 1px solid var(--bd); font-weight: 600; font-size: .75rem; transition: background .35s, color .35s; overflow: hidden; box-sizing: border-box; }
 .htbl th { font-size: .6rem; color: var(--gold); font-weight: 700; letter-spacing: .5px; background: var(--sf); }

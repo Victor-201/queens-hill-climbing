@@ -1,0 +1,91 @@
+{
+  "title": "8-QUEENS HILL CLIMBING",
+  "subtitle": "Steepest-Ascent · h(n) = number of attacking queen pairs (row + diagonal)",
+  "boardPanel": "BOARD",
+  "boardSize": "BOARD SIZE",
+  "initialPosition": "INITIAL POSITION",
+  "controls": "CONTROLS",
+  "heuristicTable": "HEURISTIC TABLE h(n)",
+  "neighbors": "NEIGHBORS",
+  "algorithmLog": "ALGORITHM LOG",
+  "metrics": {
+    "step": "Step",
+    "currentH": "Current h(n)",
+    "bestH": "Best H",
+    "bestMoves": "Best Move Count"
+  },
+  "status": {
+    "waiting": "Waiting",
+    "ready": "Ready",
+    "running": "Running",
+    "solved": "Solved",
+    "localOptimum": "Local Optimum"
+  },
+  "modes": {
+    "manual": "Manual",
+    "dragdrop": "Drag & Drop"
+  },
+  "buttons": {
+    "random": "Random",
+    "confirm": "Confirm",
+    "nextStep": "Next Step",
+    "auto": "Auto",
+    "stop": "Stop",
+    "reset": "Reset",
+    "copy": "Copy",
+    "copied": "✓ Copied",
+    "clear": "Clear"
+  },
+  "speed": "Speed",
+  "history": "History",
+  "manualHint": "Enter row (1–{n}) for each column — board updates live:",
+  "manualNote": "One queen per column — just specify the row",
+  "dragHint": "Drag queens on the board to set positions. One queen per column.",
+  "inputError": "Please fill in all rows (1–{n}) for every column!",
+  "tableHint": "Confirm the initial position to view the heuristic table.",
+  "tableCaption": "Value at cell (col c, row r) = h(n) if queen in column c moves to row r",
+  "legend": {
+    "current": "Current position",
+    "best": "Best move",
+    "h0": "h=0",
+    "low": "h low",
+    "high": "h high"
+  },
+  "snapLabels": {
+    "start": "Start",
+    "stuck": "Stuck@{step}",
+    "step": "S{step}"
+  },
+  "stopBox": {
+    "solved": "Solved! h(n) = 0",
+    "solvedDetail": "No attacking queen pairs remain.",
+    "localOptimum": "Local Optimum!",
+    "localDetail": "Current h(n) = {hv} | Best neighbor h = {bestH}",
+    "localConclusion": "No neighbor has smaller h → Stop."
+  },
+  "log": {
+    "initialState": "── Initial State ─────────────────────",
+    "position": "Position",
+    "attackingPairs": "attacking queen pairs",
+    "bestNeighbor": "Best neighbor",
+    "hValue": "h",
+    "ties": "tie moves",
+    "alreadySolved": "✓ This is already a solution!",
+    "stepHeader": "── Step {step} ──────────────────────────────",
+    "currentH": "Current h(n)",
+    "scanned": "Scanned {n} neighbors → best h",
+    "condition": "Condition",
+    "moveTo": "Move to best neighbor",
+    "col": "Column",
+    "row": "row",
+    "deltaH": "Δh",
+    "cannotImprove": "── Step {step}: Cannot improve ────────",
+    "bestNeighborH": "Best neighbor h",
+    "plateau": "All neighbors have h = current h (plateau)",
+    "worse": "All neighbors have h > current h",
+    "localOptimumReached": "→ Reached local optimum · Algorithm stopped",
+    "solvedHeader": "✓ SOLVED IN {step} STEPS ──────────",
+    "solvedH": "h(n) = 0 · No attacking queen pairs remain!",
+    "finalPosition": "Final position"
+  }
+}

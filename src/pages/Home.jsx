@@ -1,5 +1,6 @@
 import React, { useCallback } from 'react';
 import { useHillClimbing } from '../features/queens/hooks/useHillClimbing.js';
+import { useLang } from '../context/LanguageContext.jsx';
 import Navbar from '../components/layout/Navbar.jsx';
 import Container from '../components/layout/Container.jsx';
 import ChessBoard from '../features/queens/components/ChessBoard.jsx';
@@ -8,6 +9,8 @@ import StatsPanel from '../features/queens/components/StatsPanel.jsx';
 import { Grid3X3 } from 'lucide-react';
 
 export default function Home() {
+  const { t } = useLang();
+
   const {
     boardSize, queens, setupQ, phase, stepNum, speed, mode,
     metrics, hTable, bestSet, atkSet, tgtSet,
@@ -16,7 +19,7 @@ export default function Home() {
     changeBoardSize, onSI, switchMode, onCellClick, doRandom, confirmSetup,
     doStep, toggleAuto, onSpeed, restoreSnap, fullReset,
     clearLog,
-  } = useHillClimbing();
+  } = useHillClimbing(t);
 
   const handleSIChange = useCallback((col, val) => {
     onSI(col, val);
@@ -24,13 +27,10 @@ export default function Home() {
 
   return (
     <Container>
-      {/* Flying queen overlay */}
       <div id="fq" ref={flyingQueenRef}></div>
-
       <Navbar />
 
       <div className="main">
-        {/* ── LEFT COLUMN ── */}
         <div className="col-l">
           <ControlPanel
             boardSize={boardSize}
@@ -56,12 +56,11 @@ export default function Home() {
           />
         </div>
 
-        {/* ── CENTER COLUMN: board ── */}
         <div className="col-c">
           <div className="panel">
             <div className="ph">
               <Grid3X3 size={15} className="ph-ico" />
-              <span className="ph-ttl">BÀN CỜ</span>
+              <span className="ph-ttl">{t('boardPanel')}</span>
               <span style={{ marginLeft: 'auto', fontSize: '.62rem', color: 'var(--gold)', letterSpacing: '1px' }}>
                 {boardSize}×{boardSize}
               </span>
@@ -81,7 +80,6 @@ export default function Home() {
           </div>
         </div>
 
-        {/* ── RIGHT COLUMN: stats ── */}
         <div className="col-r">
           <StatsPanel
             queens={queens}

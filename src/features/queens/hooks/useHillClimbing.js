@@ -4,7 +4,7 @@ import { h, buildTable } from '../algorithms/heuristic.js';
 import { steepest, attackedSet } from '../algorithms/neighborGenerator.js';
 import { queenSVG, sleep, cellCenter, flyArc } from '../utils/boardUtils.js';
 
-export function useHillClimbing() {
+export function useHillClimbing(t = (k) => k) {
   // ── Board size state ──
   const [boardSize, setBoardSize] = useState(8);
   const boardSizeRef = useRef(8);
@@ -176,11 +176,11 @@ export function useHillClimbing() {
     const pos = newQ.map((r, c) => cols[c] + (r + 1)).join(', ');
     const neighborCount = n * (n - 1);
     addLog(
-      `<div class="lt">── Trạng thái ban đầu ─────────────────────</div>
-      <div class="lm">Vị trí: [${pos}]</div>
-      <div class="lm">h(n) = <b style="color:var(--gold2)">${hv}</b> cặp hậu tấn công nhau</div>
-      <div class="lm hi">Láng giềng tốt nhất: h = ${bestH} | ${moves.length} nước tie</div>
-      ${hv === 0 ? '<div class="lm ok">✓ Đây đã là lời giải ngay từ đầu!</div>' : ''}`,
+      `<div class="lt">${t('log.initialState')}</div>
+      <div class="lm">${t('log.position')}: [${pos}]</div>
+      <div class="lm">h(n) = <b style="color:var(--gold2)">${hv}</b> ${t('log.attackingPairs')}</div>
+      <div class="lm hi">${t('log.bestNeighbor')}: ${t('log.hValue')} = ${bestH} | ${moves.length} ${t('log.ties')}</div>
+      ${hv === 0 ? `<div class="lm ok">${t('log.alreadySolved')}</div>` : ''}`,
       hv === 0 ? 'ok' : 'step'
     );
 
@@ -288,11 +288,11 @@ export function useHillClimbing() {
         ? 'Tất cả láng giềng có h = h hiện tại (plateau)'
         : 'Tất cả láng giềng có h > h hiện tại';
       addLog(
-        `<div class="lt">── Bước ${newStep}: Không thể cải thiện ────────</div>
-        <div class="lm">h(n) hiện tại = <b style="color:var(--gold2)">${hv}</b></div>
-        <div class="lm">h tốt nhất láng giềng = <b style="color:var(--red)">${bestH}</b></div>
-        <div class="lm err">⚠ ${reason}</div>
-        <div class="lm err">→ Rơi vào <b>local optimum</b> · Dừng thuật toán</div>`,
+        `<div class="lt">${t('log.cannotImprove', { step: newStep })}</div>
+        <div class="lm">${t('log.currentH')} = <b style="color:var(--gold2)">${hv}</b></div>
+        <div class="lm">${t('log.bestNeighborH')} = <b style="color:var(--red)">${bestH}</b></div>
+        <div class="lm err">⚠ ${bestH === hv ? t('log.plateau') : t('log.worse')}</div>
+        <div class="lm err">${t('log.localOptimumReached')}</div>`,
         'err'
       );
       setPhase('stuck');
@@ -314,11 +314,11 @@ export function useHillClimbing() {
     const neighborCount = n * (n - 1);
 
     addLog(
-      `<div class="lt">── Bước ${newStep} ──────────────────────────────</div>
-      <div class="lm">h(n) hiện tại = <b style="color:var(--gold2)">${hv}</b></div>
-      <div class="lm hi">Duyệt ${neighborCount} láng giềng → h tốt nhất = <b style="color:var(--green)">${bestH}</b> (${moves.length} nước)</div>
-      <div class="lm ok">Điều kiện: ${bestH} &lt; ${hv} → Di chuyển đến best neighbor</div>
-      <div class="lm ok">→ Cột <b>${cols[mv.col]}</b>: hàng ${fr + 1} → hàng ${mv.row + 1}  (Δh = ${hv - bestH})</div>`,
+      `<div class="lt">${t('log.stepHeader', { step: newStep })}</div>
+      <div class="lm">${t('log.currentH')} = <b style="color:var(--gold2)">${hv}</b></div>
+      <div class="lm hi">${t('log.scanned', { n: neighborCount })} = <b style="color:var(--green)">${bestH}</b> (${moves.length} ${t('log.ties')})</div>
+      <div class="lm ok">${t('log.condition')}: ${bestH} &lt; ${hv} → ${t('log.moveTo')}</div>
+      <div class="lm ok">→ ${t('log.col')} <b>${cols[mv.col]}</b>: ${t('log.row')} ${fr + 1} → ${t('log.row')} ${mv.row + 1}  (${t('log.deltaH')} = ${hv - bestH})</div>`,
       'step'
     );
 
@@ -346,9 +346,9 @@ export function useHillClimbing() {
       setPhase('solved');
       phaseRef.current = 'solved';
       addLog(
-        `<div class="lt" style="color:var(--green)">✓ GIẢI XONG SAU ${newStep} BƯỚC ──────────</div>
-        <div class="lm ok">h(n) = 0 · Không còn cặp hậu tấn công nhau!</div>
-        <div class="lm ok">Vị trí cuối: [${newQ.map((r, c) => cols[c] + (r + 1)).join(', ')}]</div>`,
+        `<div class="lt" style="color:var(--green)">${t('log.solvedHeader', { step: newStep })}</div>
+        <div class="lm ok">${t('log.solvedH')}</div>
+        <div class="lm ok">${t('log.finalPosition')}: [${newQ.map((r, c) => cols[c] + (r + 1)).join(', ')}]</div>`,
         'ok'
       );
       setStopBox({ type: 'solved', hv: 0 });
