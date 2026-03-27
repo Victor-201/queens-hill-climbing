@@ -3,6 +3,7 @@
   "subtitle": "Steepest-Ascent · h(n) = number of attacking queen pairs (row + diagonal)",
   "boardPanel": "BOARD",
   "boardSize": "BOARD SIZE",
+  "language": "LANGUAGE",
   "initialPosition": "INITIAL POSITION",
   "controls": "CONTROLS",
   "heuristicTable": "HEURISTIC TABLE h(n)",

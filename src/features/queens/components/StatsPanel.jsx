@@ -174,13 +174,55 @@ const StatsPanel = React.memo(function StatsPanel({
         </div>
         <div className="pb">
           <div className="log-area" ref={logRef} id="log">
-            {logs.map((entry) => (
-              <div
-                key={entry.id}
-                className={`le${entry.cls ? " " + entry.cls : ""}`}
-                dangerouslySetInnerHTML={{ __html: entry.html }}
-              />
-            ))}
+            {logs.map((entry) => {
+              const { id, data, cls } = entry;
+              const className = `le${cls ? " " + cls : ""}`;
+              if (!data) return null;
+
+              if (data.type === 'initial') {
+                return (
+                  <div key={id} className={className}>
+                    <div className="lt">{t('log.initialState')}</div>
+                    <div className="lm">{t('log.position')}: [{data.pos}]</div>
+                    <div className="lm">h(n) = <b style={{color:'var(--gold2)'}}>{data.hv}</b> {t('log.attackingPairs')}</div>
+                    <div className="lm hi">{t('log.bestNeighbor')}: {t('log.hValue')} = {data.bestH} | {data.ties} {t('log.ties')}</div>
+                    {data.hv === 0 && <div className="lm ok">{t('log.alreadySolved')}</div>}
+                  </div>
+                );
+              }
+              if (data.type === 'stuck') {
+                return (
+                  <div key={id} className={className}>
+                    <div className="lt">{t('log.cannotImprove', { step: data.step })}</div>
+                    <div className="lm">{t('log.currentH')} = <b style={{color:'var(--gold2)'}}>{data.hv}</b></div>
+                    <div className="lm">{t('log.bestNeighborH')} = <b style={{color:'var(--red)'}}>{data.bestH}</b></div>
+                    <div className="lm err">⚠ {data.reason === 'plateau' ? t('log.plateau') : t('log.worse')}</div>
+                    <div className="lm err">{t('log.localOptimumReached')}</div>
+                  </div>
+                );
+              }
+              if (data.type === 'step') {
+                return (
+                  <div key={id} className={className}>
+                    <div className="lt">{t('log.stepHeader', { step: data.step })}</div>
+                    <div className="lm">{t('log.currentH')} = <b style={{color:'var(--gold2)'}}>{data.hv}</b></div>
+                    <div className="lm hi">{t('log.scanned', { n: data.n })} = <b style={{color:'var(--green)'}}>{data.bestH}</b> ({data.ties} {t('log.ties')})</div>
+                    <div className="lm ok">{t('log.condition')}: {data.bestH} &lt; {data.hv} → {t('log.moveTo')}</div>
+                    <div className="lm ok">→ {t('log.col')} <b>{data.col}</b>: {t('log.row')} {data.frRow} → {t('log.row')} {data.toRow}  ({t('log.deltaH')} = {data.deltaH})</div>
+                  </div>
+                );
+              }
+              if (data.type === 'solved') {
+                return (
+                  <div key={id} className={className}>
+                    <div className="lt" style={{color:'var(--green)'}}>{t('log.solvedHeader', { step: data.step })}</div>
+                    <div className="lm ok">{t('log.solvedH')}</div>
+                    <div className="lm ok">{t('log.finalPosition')}: [{data.pos}]</div>
+                  </div>
+                );
+              }
+              return null;
+            })}
           </div>
         </div>
       </div>

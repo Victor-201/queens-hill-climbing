@@ -12,6 +12,7 @@ import {
   Zap,
   LayoutGrid,
 } from "lucide-react";
+import LanguageSwitcher from "../../LanguageSwitcher.jsx";
 
 function ControlPanel({
   boardSize = 8,
@@ -223,6 +224,11 @@ function ControlPanel({
               onChange={(e) => onSpeed(e.target.value)}
             />
             <span style={{ minWidth: "52px" }}>{speed}ms</span>
+          </div>
+
+          <div className="row" style={{ alignItems: "center", justifyContent: "space-between", fontSize: ".68rem", fontWeight: 600, color: "var(--tx)", background: "var(--sf)", padding: "6px 10px", borderRadius: "6px", border: "1px solid var(--bd)" }}>
+            <span>{t('language')}:</span>
+            <LanguageSwitcher />
           </div>
 
           <div style={{ fontSize: ".58rem", color: "var(--muted)" }}>{t('history')}:</div>

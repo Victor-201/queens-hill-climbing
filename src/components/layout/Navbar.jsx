@@ -1,7 +1,6 @@
 import React from "react";
 import { Crown } from "lucide-react";
 import { useLang } from "../../context/LanguageContext.jsx";
-import LanguageSwitcher from "../LanguageSwitcher.jsx";
 
 export default function Navbar() {
   const { t } = useLang();
@@ -12,9 +11,6 @@ export default function Navbar() {
         <span>{t('title')}</span>
       </h1>
       <div className="hdr-sub">{t('subtitle')}</div>
-      <div style={{ position: "absolute", top: "50%", right: "18px", transform: "translateY(-50%)" }}>
-        <LanguageSwitcher />
-      </div>
     </div>
   );
 }

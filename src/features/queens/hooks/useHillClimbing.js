@@ -49,9 +49,9 @@ export function useHillClimbing(t = (k) => k) {
   useEffect(() => { stepNumRef.current = stepNum; }, [stepNum]);
 
   // ── Helper: add log entry ──
-  const addLog = useCallback((html, cls = '') => {
+  const addLog = useCallback((data, cls = '') => {
     const id = ++logIdRef.current;
-    setLogs(prev => [...prev, { id, html, cls }]);
+    setLogs(prev => [...prev, { id, data, cls }]);
   }, []);
 
   const clearLog = useCallback(() => setLogs([]), []);
@@ -176,11 +176,7 @@ export function useHillClimbing(t = (k) => k) {
     const pos = newQ.map((r, c) => cols[c] + (r + 1)).join(', ');
     const neighborCount = n * (n - 1);
     addLog(
-      `<div class="lt">${t('log.initialState')}</div>
-      <div class="lm">${t('log.position')}: [${pos}]</div>
-      <div class="lm">h(n) = <b style="color:var(--gold2)">${hv}</b> ${t('log.attackingPairs')}</div>
-      <div class="lm hi">${t('log.bestNeighbor')}: ${t('log.hValue')} = ${bestH} | ${moves.length} ${t('log.ties')}</div>
-      ${hv === 0 ? `<div class="lm ok">${t('log.alreadySolved')}</div>` : ''}`,
+      { type: 'initial', pos, hv, bestH, ties: moves.length },
       hv === 0 ? 'ok' : 'step'
     );
 
@@ -284,15 +280,9 @@ export function useHillClimbing(t = (k) => k) {
     await sleep(Math.max(speedRef.current * 0.28, 220));
 
     if (bestH >= hv) {
-      const reason = bestH === hv
-        ? 'Tất cả láng giềng có h = h hiện tại (plateau)'
-        : 'Tất cả láng giềng có h > h hiện tại';
+      const reason = bestH === hv ? 'plateau' : 'worse';
       addLog(
-        `<div class="lt">${t('log.cannotImprove', { step: newStep })}</div>
-        <div class="lm">${t('log.currentH')} = <b style="color:var(--gold2)">${hv}</b></div>
-        <div class="lm">${t('log.bestNeighborH')} = <b style="color:var(--red)">${bestH}</b></div>
-        <div class="lm err">⚠ ${bestH === hv ? t('log.plateau') : t('log.worse')}</div>
-        <div class="lm err">${t('log.localOptimumReached')}</div>`,
+        { type: 'stuck', step: newStep, hv, bestH, reason },
         'err'
       );
       setPhase('stuck');
@@ -314,11 +304,11 @@ export function useHillClimbing(t = (k) => k) {
     const neighborCount = n * (n - 1);
 
     addLog(
-      `<div class="lt">${t('log.stepHeader', { step: newStep })}</div>
-      <div class="lm">${t('log.currentH')} = <b style="color:var(--gold2)">${hv}</b></div>
-      <div class="lm hi">${t('log.scanned', { n: neighborCount })} = <b style="color:var(--green)">${bestH}</b> (${moves.length} ${t('log.ties')})</div>
-      <div class="lm ok">${t('log.condition')}: ${bestH} &lt; ${hv} → ${t('log.moveTo')}</div>
-      <div class="lm ok">→ ${t('log.col')} <b>${cols[mv.col]}</b>: ${t('log.row')} ${fr + 1} → ${t('log.row')} ${mv.row + 1}  (${t('log.deltaH')} = ${hv - bestH})</div>`,
+      {
+        type: 'step', step: newStep, hv, bestH, ties: moves.length, 
+        n: neighborCount, col: cols[mv.col], frRow: fr + 1, toRow: mv.row + 1, 
+        deltaH: hv - bestH
+      },
       'step'
     );
 
@@ -345,10 +335,9 @@ export function useHillClimbing(t = (k) => k) {
     if (hv2 === 0) {
       setPhase('solved');
       phaseRef.current = 'solved';
+      const finalPos = newQ.map((r, c) => cols[c] + (r + 1)).join(', ');
       addLog(
-        `<div class="lt" style="color:var(--green)">${t('log.solvedHeader', { step: newStep })}</div>
-        <div class="lm ok">${t('log.solvedH')}</div>
-        <div class="lm ok">${t('log.finalPosition')}: [${newQ.map((r, c) => cols[c] + (r + 1)).join(', ')}]</div>`,
+        { type: 'solved', step: newStep, pos: finalPos },
         'ok'
       );
       setStopBox({ type: 'solved', hv: 0 });

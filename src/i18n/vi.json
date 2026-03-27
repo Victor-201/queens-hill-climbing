@@ -3,6 +3,7 @@
   "subtitle": "Steepest-Ascent · h(n) = số cặp hậu tấn công nhau (hàng + đường chéo)",
   "boardPanel": "BÀN CỜ",
   "boardSize": "KÍCH THƯỚC BÀN CỜ",
+  "language": "NGÔN NGỮ",
   "initialPosition": "VỊ TRÍ KHỞI TẠO",
   "controls": "ĐIỀU KHIỂN",
   "heuristicTable": "BẢNG HEURISTIC h(n)",
