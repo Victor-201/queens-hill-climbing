@@ -1,0 +1,99 @@
+# ══════════════════════════════════════════════════════════════════════
+# queens-hill-climbing — CI / CD Pipeline
+# Standard: devops.skill.md Section 9
+#
+# Triggers:
+#   • Every PR → quality gate (lint + build)
+#   • Push to main → quality gate → deploy to Cloudflare Pages
+#   • Manual dispatch → rollback instructions
+#
+# Note: vercel.json is kept as a fallback alternative deployment target.
+# ══════════════════════════════════════════════════════════════════════
+
+name: ci-cd
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  # ── Step 1: Quality gate ──────────────────────────────────────────
+  quality:
+    name: Lint & Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node 22
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Build
+        run: npm run build
+
+      - name: Upload build artifact
+        if: github.ref == 'refs/heads/main'
+        uses: actions/upload-artifact@v4
+        with:
+          name: dist-${{ github.sha }}
+          path: dist/
+          retention-days: 7
+
+  # ── Step 2: Deploy to Cloudflare Pages (main only) ────────────────
+  deploy:
+    name: Deploy → Cloudflare Pages
+    needs: quality
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      deployments: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Download build artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: dist-${{ github.sha }}
+          path: dist/
+
+      - name: Deploy to Cloudflare Pages
+        uses: cloudflare/pages-action@v1
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          projectName: queens-hill-climbing
+          directory: dist
+          gitHubToken: ${{ secrets.GITHUB_TOKEN }}
+          branch: main
+
+      - name: Verify deployment
+        run: echo "✅ Deployed to Cloudflare Pages."
+
+  # ── Step 3: Rollback (manual trigger only) ────────────────────────
+  rollback:
+    name: Rollback (manual)
+    if: github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Instructions
+        run: |
+          echo "Rollback: Cloudflare Pages dashboard → Deployments → previous deployment → 'Rollback to this deployment'."
